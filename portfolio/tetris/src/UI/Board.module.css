@@ -1,0 +1,28 @@
+.board {
+  width: 450px;
+  height: 700px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.board ul {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.board ul li {
+  width: 30px;
+  height: 30px;
+  border: 0.5px solid black;
+  list-style: none;
+  background-color: gray;
+}
+
+.board ul li.board_starting {
+  border: 0px solid white;
+  background-color: white;
+}

@@ -1,0 +1,52 @@
+.form-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.sign-in-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.sign-in-form > div {
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  margin: 30px 0;
+  font-size: 25px;
+}
+
+.sign-in-form > div > input {
+  width: 300px;
+  height: 30px;
+  font-size: 25px;
+}
+
+div.sign-in-form-button {
+  display: flex;
+  justify-content: flex-end;
+}
+
+div.sign-in-form-button button {
+  width: 120px;
+  height: 40px;
+  margin-left: 20px;
+  border-radius: 10px;
+  font-size: 25px;
+}
+
+div.sign-in-form-button button:hover {
+  box-shadow: 0 0 3px 3px gray;
+}
+
+.sign-in-form-button-sign-in {
+  background-color: gainsboro;
+}
+.sign-in-form-button-cancel {
+  background-color: blanchedalmond;
+}

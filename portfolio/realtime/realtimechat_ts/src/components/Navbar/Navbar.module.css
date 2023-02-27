@@ -1,0 +1,42 @@
+* {
+  text-decoration: none;
+}
+.navbar {
+  background-color: ivory;
+
+  height: 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  width: 100px;
+  color: black;
+  padding: 20px;
+}
+
+.menues {
+  width: 400px;
+  padding: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.menues_menu {
+  padding: 10px;
+}
+
+.login {
+  color: black;
+}
+
+a:link,
+a:visited {
+  color: black;
+}
+a:hover {
+  color: darkolivegreen;
+}

@@ -1,0 +1,25 @@
+.btn {
+  font-size: 1rem;
+  border-radius: inherit;
+  color: white;
+}
+
+.btn_upload {
+  background-color: gray;
+}
+
+.btn_send {
+  background-color: blue;
+}
+
+.btn_delete {
+  background-color: red;
+}
+
+.btn_folder {
+  background-color: olive;
+}
+
+.btn_download {
+  background-color: darkcyan;
+}

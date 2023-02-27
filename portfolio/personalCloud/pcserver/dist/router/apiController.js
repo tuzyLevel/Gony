@@ -1,0 +1,22 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const sessionCheck_1 = __importDefault(require("./api/sessionCheck"));
+const folderListing_1 = __importDefault(require("./api/folderListing"));
+const currentFolderFiles_1 = __importDefault(require("./api/currentFolderFiles"));
+const files_1 = __importDefault(require("./api/files/files"));
+const users_1 = __importDefault(require("./api/users/users"));
+const notice_1 = __importDefault(require("./api/notice/notice"));
+const sign_1 = __importDefault(require("./api/sign/sign"));
+const router = express_1.default.Router();
+router.use("/session", sessionCheck_1.default);
+router.use("/folderListing", folderListing_1.default);
+router.use("/currentFolderFiles", currentFolderFiles_1.default);
+router.use("/files", files_1.default);
+router.use("/users", users_1.default);
+router.use("/notice", notice_1.default);
+router.use("/sign", sign_1.default);
+exports.default = router;

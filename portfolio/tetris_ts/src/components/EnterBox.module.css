@@ -1,0 +1,12 @@
+.enter-box {
+  width: 600px;
+  height: 600px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.enter-box h1 {
+  color: white;
+}

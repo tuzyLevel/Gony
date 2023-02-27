@@ -1,0 +1,13 @@
+.menu_item {
+  font-weight: inherit;
+  font-size: inherit;
+  background-color: inherit;
+}
+
+.menu_item:hover {
+  color: brown;
+}
+
+.menu_item_notice__on {
+  color: red;
+}

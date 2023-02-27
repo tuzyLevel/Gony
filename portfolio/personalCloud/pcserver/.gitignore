@@ -1,0 +1,9 @@
+
+#dot env
+.env
+
+#node_modules
+/node_modules
+
+#users_folders
+/users

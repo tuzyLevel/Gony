@@ -1,0 +1,10 @@
+{
+  "devDependencies": {
+    "@types/node": "^18.8.5",
+    "typescript": "^4.8.4"
+  },
+  "scripts": {
+    "start": "node ./dist/Typescript.js",
+    "build": "npx tsc"
+  }
+}

@@ -1,0 +1,14 @@
+.folder_clicked,
+.folder:hover,
+.folder_dragged_enter {
+  background-color: beige;
+  color: brown;
+  border-radius: 5px;
+}
+
+/* 
+.folder:hover {
+  background-color: beige;
+  color: brown;
+  border-radius: 5px;
+} */

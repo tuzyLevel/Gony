@@ -1,0 +1,27 @@
+.board-container {
+  width: 500px;
+  height: 600px;
+  background-color: white;
+  display: flex;
+  justify-content: left;
+}
+.board-container:focus {
+  outline-width: 0px;
+}
+
+.gameboard {
+  width: 360px;
+  height: 600px;
+  background-color: gray;
+}
+.board-row {
+  display: flex;
+}
+
+.board-column {
+  border: 1px solid black;
+  box-sizing: border-box;
+  width: 40px;
+  height: 40px;
+  box-shadow: 0px 0px -10px -10px black;
+}

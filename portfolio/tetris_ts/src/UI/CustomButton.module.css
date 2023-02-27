@@ -1,0 +1,29 @@
+.enter {
+  width: 200px;
+  height: 100px;
+  font-size: 20px;
+  background-color: lightgray;
+  border-radius: 10px;
+}
+.enter:hover {
+  background-color: white;
+}
+
+.enter-online {
+  border: 3px solid red;
+}
+
+.enter-offline {
+  border: 3px solid lightgreen;
+}
+
+.enter:hover {
+  transform: translateY(-10px);
+}
+
+.enter-online:hover {
+  box-shadow: 0 0 10px 10px red;
+}
+.enter-offline:hover {
+  box-shadow: 0 0 10px 10px lightgreen;
+}

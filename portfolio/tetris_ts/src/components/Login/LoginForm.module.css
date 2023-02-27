@@ -1,0 +1,52 @@
+.form-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.login-form > div {
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  margin: 40px 0;
+  font-size: 25px;
+}
+
+.login-form > div > input {
+  width: 300px;
+  height: 30px;
+  font-size: 25px;
+}
+
+div.login-form-button {
+  display: flex;
+  justify-content: flex-end;
+}
+
+div.login-form-button button {
+  width: 120px;
+  height: 40px;
+  margin-left: 20px;
+  border-radius: 10px;
+  font-size: 25px;
+}
+
+div.login-form-button button:hover {
+  box-shadow: 0 0 3px 3px gray;
+}
+
+.login-form-button-login {
+  background-color: gainsboro;
+}
+.login-form-button-cancel {
+  background-color: blanchedalmond;
+}

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button type="button" id="keyReader">이거 누르면 방 폭발</button>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      let socket = io("/room");
+      let socketMain = io("/");
+
+      console.log(socket);
+      console.log(socket.connected);
+      console.log(socketMain.connected);
+      document
+        .getElementById("keyReader")
+        .addEventListener("click", (event) => {
+          socket.emit("boom", "this room is broken");
+          console.log("이벤트 발생");
+        });
+    </script>
+  </body>
+</html>

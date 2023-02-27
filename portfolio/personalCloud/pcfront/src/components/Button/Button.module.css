@@ -1,0 +1,65 @@
+.bg {
+  width: 200px;
+  height: 100px;
+  margin: 0 10px;
+  color: white;
+  font-size: 1.5rem;
+  background-color: none;
+  border-radius: 10px;
+}
+
+.md {
+  width: 100px;
+  height: 50px;
+  font-size: 1.2rem;
+  border-radius: 10px;
+}
+
+.sm {
+  width: 80px;
+  height: 40px;
+  font-size: 1rem;
+  border-radius: 10px;
+}
+
+.mg-sm {
+  margin: 0 20px;
+}
+
+.main_regist_btn {
+  border: 1px solid rgba(140, 225, 210, 0.7);
+}
+
+.main_login_btn {
+  border: 1px solid rgba(167, 173, 43, 1);
+}
+
+.bg:hover {
+  transform: translate(0, -10px);
+  box-shadow: 0 0 20px;
+}
+
+.bg:active {
+  background-color: bisque;
+  color: black;
+}
+
+.btn_cancel {
+  background-color: rgb(196, 36, 36);
+}
+
+.btn_signin {
+  background-color: rgba(140, 225, 210, 0.7);
+}
+
+.btn_login {
+  background-color: rgba(167, 173, 43, 1);
+}
+
+.btn_default {
+  background-color: #dddddd;
+}
+
+.btn_confirmation {
+  background-color: rgba(19, 79, 183, 1);
+}

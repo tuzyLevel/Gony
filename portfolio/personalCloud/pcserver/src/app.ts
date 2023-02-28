@@ -13,7 +13,7 @@ import { webSocket } from "./socket";
 
 import authTouching from "./middleware/authTouching";
 
-import apiController from "./router/apiController";
+import apiController from "./router/controller/apiController";
 
 const app = express();
 

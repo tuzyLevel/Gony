@@ -169,7 +169,7 @@ const Box = () => {
   const getFolderList = useCallback(async () => {
     try {
       const response = await axios.post(
-        `${SERVER_URL}/api/folderListing`,
+        `${SERVER_URL}/api/directories/directories`,
         {},
         { withCredentials: true }
       );
@@ -211,7 +211,7 @@ const Box = () => {
       if (loginId === "/logout" || loginId === "logout") return;
 
       const response = await axios.post(
-        `${SERVER_URL}/api/currentFolderFiles`,
+        `${SERVER_URL}/api/files/currentFolder`,
         { folder: folder },
         { withCredentials: true }
       );
@@ -251,9 +251,6 @@ const Box = () => {
 
     const destFolder = currentFolderFiles[movedInFolderIndex];
     if (destFolder.type === "file") return;
-
-    // console.log(`file: ${file.path}`);
-    // console.log(`destFolder: ${destFolder.path}`);
 
     try {
       const data = await axios.post(

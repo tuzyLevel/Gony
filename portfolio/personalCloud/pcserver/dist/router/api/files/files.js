@@ -7,8 +7,10 @@ const express_1 = __importDefault(require("express"));
 const multer_1 = __importDefault(require("multer"));
 const promises_1 = __importDefault(require("fs/promises"));
 const uuid4_1 = __importDefault(require("uuid4"));
+const path_1 = __importDefault(require("path"));
 const fileTicket_1 = __importDefault(require("../../../schema/fileTicket"));
 const router = express_1.default.Router();
+const rootFolder = path_1.default.join(process.env.PWD, `/users`);
 const storage = multer_1.default.diskStorage({
     destination: (req, file, cb) => {
         const { currentFolder } = req.body;
@@ -175,10 +177,54 @@ router.get(`/download`, (req, res, next) => {
     }
     next();
 }, (req, res, next) => {
-    console.log("여기 실행 됨?");
     const filePath = req.query.filePath;
     const fileName = filePath.substring(filePath.lastIndexOf("/"));
     res.setHeader("Content-Disposition", `attachment;fileName=${fileName};`);
     res.sendFile(`${process.env.PWD}/users/${filePath}`);
+});
+// POST `api/files/currentFolder`
+router.post("/currentFolder", async (req, res, next) => {
+    const currentFolderPath = req.body.folder;
+    const realCurrentFolderPath = `${rootFolder}/${currentFolderPath}`;
+    console.log(realCurrentFolderPath);
+    const msg = {
+        RESPONSE_CODE: "DEFAULT",
+        COMMENT: "",
+        data: [],
+    };
+    try {
+        const list = await promises_1.default.readdir(realCurrentFolderPath, {
+            withFileTypes: true,
+        });
+        const fileList = [];
+        const folderList = [];
+        for (const dirent of list) {
+            const direntObject = {
+                name: dirent.name,
+                path: `${currentFolderPath}/${dirent.name}`,
+                type: "file",
+                volume: 0,
+            };
+            const volume = (await promises_1.default.stat(`${realCurrentFolderPath}/${dirent.name}`))
+                .size;
+            direntObject.volume = volume;
+            if (dirent.isDirectory()) {
+                direntObject.type = "directory";
+                folderList.push(direntObject);
+                continue;
+            }
+            fileList.push(direntObject);
+        }
+        msg.RESPONSE_CODE = "SUCCESS";
+        msg.COMMENT = `${currentFolderPath} 파일 목록 로드 완료!`;
+        msg.data = folderList.concat(fileList);
+    }
+    catch (err) {
+        msg.RESPONSE_CODE = "FAILED";
+        msg.COMMENT = `${currentFolderPath} 파일 목록 로드 실패!`;
+        msg.data = [];
+        console.error(err);
+    }
+    res.json(msg);
 });
 exports.default = router;

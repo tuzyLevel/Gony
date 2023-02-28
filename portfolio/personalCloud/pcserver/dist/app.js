@@ -13,7 +13,7 @@ const http_1 = require("http");
 const db_1 = require("./db");
 const socket_1 = require("./socket");
 const authTouching_1 = __importDefault(require("./middleware/authTouching"));
-const apiController_1 = __importDefault(require("./router/apiController"));
+const apiController_1 = __importDefault(require("./router/controller/apiController"));
 const app = (0, express_1.default)();
 const httpServer = (0, http_1.createServer)(app);
 dotenv_1.default.config();

@@ -49,6 +49,8 @@ const Navbar = (props: navbarProps) => {
       })
       .then((res) => {
         const { RESPONSE_CODE, COMMENT } = res.data;
+        console.log(res);
+        console.log(res.data);
         if (RESPONSE_CODE === "LOGOUT_SUCCESS") {
           console.log(COMMENT);
           dispatch(logout());

@@ -186,7 +186,12 @@ const ModalForm = (props: ModalProps) => {
                     }}
                     id={content}
                   >
-                    {props.currentFolderFiles[props.modalFileIndex].name}
+                    {props.currentFolderFiles[props.modalFileIndex].name
+                      .length > 15
+                      ? `${props.currentFolderFiles[
+                          props.modalFileIndex
+                        ].name.substring(0, 15)}...`
+                      : props.currentFolderFiles[props.modalFileIndex].name}
                   </div>
                 </div>
               ) : (

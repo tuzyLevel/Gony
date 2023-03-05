@@ -4,7 +4,6 @@ import React, {
   useState,
   useCallback,
   SyntheticEvent,
-  useMemo,
 } from "react";
 import axios from "axios";
 
@@ -40,6 +39,8 @@ import Notice from "../../components/BoxContent/Right/Notice";
 
 library.add(fas);
 
+let socket;
+
 const modalBtns: ModalBtns = {
   Rename: {
     category: "rename",
@@ -74,8 +75,6 @@ const menues: Menu[] = [
   { title: "Notice", to: "/box" },
   { title: "Logout", to: "/logout" },
 ];
-
-let socket;
 
 const Box = () => {
   // const navigate = useNavigate();
@@ -150,9 +149,8 @@ const Box = () => {
         ) === true
       ) {
         try {
-          const response = await axios.post(
-            `${SERVER_URL}/api/files/delete`,
-            { path: file.path },
+          const response = await axios.delete(
+            `${SERVER_URL}/api/files/${file.path}`,
             { withCredentials: true }
           );
           const msg: Message.FileMessage = response.data;
@@ -160,6 +158,17 @@ const Box = () => {
         } catch (err) {
           console.error(err);
         }
+        // try {
+        //   const response = await axios.post(
+        //     `${SERVER_URL}/api/files/delete`,
+        //     { path: file.path },
+        //     { withCredentials: true }
+        //   );
+        //   const msg: Message.FileMessage = response.data;
+        //   alert(msg.COMMENT);
+        // } catch (err) {
+        //   console.error(err);
+        // }
         callAPICurrentFolderFiles(currentFolder);
         return;
       }
@@ -168,11 +177,9 @@ const Box = () => {
 
   const getFolderList = useCallback(async () => {
     try {
-      const response = await axios.post(
-        `${SERVER_URL}/api/directories/directories`,
-        {},
-        { withCredentials: true }
-      );
+      const response = await axios.get(`${SERVER_URL}/api/directories`, {
+        withCredentials: true,
+      });
       const msg: Message.FolderListMessage = response.data;
       if (msg.RESPONSE_CODE === "SUCCESS") {
         const data = msg.data;

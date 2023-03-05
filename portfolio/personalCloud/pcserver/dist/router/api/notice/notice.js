@@ -8,7 +8,7 @@ const moment_timezone_1 = __importDefault(require("moment-timezone"));
 const fileTicket_1 = __importDefault(require("../../../schema/fileTicket"));
 const promises_1 = __importDefault(require("fs/promises"));
 const router = express_1.default.Router();
-router.post(`/`, async (req, res, next) => {
+router.get(`/`, async (req, res, next) => {
     console.log(req.session.userId);
     const to = req.session.userId;
     const msg = {
@@ -22,19 +22,24 @@ router.post(`/`, async (req, res, next) => {
             .sort({ madeDate: -1 });
         const fileTicket = validFileTickets.map((ticket) => {
             const ticketObject = ticket.toObject();
-            const madeDate = (0, moment_timezone_1.default)(ticket.madeDate).format("YYMMDD-hh:mm:ss");
-            const expireDate = (0, moment_timezone_1.default)(ticket.expireDate).format("YYMMDD-hh:mm:ss");
+            const madeDate = (0, moment_timezone_1.default)(ticket.madeDate)
+                .add(9, "h")
+                .format("YYMMDD-HH:mm:ss");
+            const expireDate = (0, moment_timezone_1.default)(ticket.expireDate)
+                .add(9, "h")
+                .format("YYMMDD-HH:mm:ss");
             return { ...ticketObject, madeDate: madeDate, expireDate: expireDate };
         });
         msg.RESPONSE_CODE = "SUCCESS";
         msg.COMMENT = msg.COMMENT + "성공";
         msg.TICKETS = fileTicket;
-        res.json(msg);
     }
     catch (err) {
         console.error(err);
         msg.RESPONSE_CODE = "FAILED";
         msg.COMMENT = msg.COMMENT + "실패";
+    }
+    finally {
         res.json(msg);
     }
 });

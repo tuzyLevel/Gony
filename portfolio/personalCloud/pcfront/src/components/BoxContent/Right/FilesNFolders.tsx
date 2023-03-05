@@ -1,20 +1,8 @@
 import React, { SyntheticEvent } from "react";
 
-import axios from "axios";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { useSelector, useDispatch } from "react-redux";
-
-import Card from "../../Card/Card";
-
 import classes from "./FilesNFolders.module.css";
-
-// import {
-//   renameModalOpen,
-//   sendModalOpen,
-// } from "../../../store/features/boxModalSlice";
-import { RootState } from "../../../store/store";
 
 interface FilesNFoldersProps extends React.PropsWithChildren {
   currentFolderFiles: Array<Files.ExtendedFileNode>;

@@ -7,7 +7,7 @@ import fs from "fs/promises";
 
 const router = express.Router();
 
-router.post(`/`, async (req, res, next) => {
+router.get(`/`, async (req, res, next) => {
   console.log(req.session.userId);
   const to = req.session.userId;
 
@@ -24,19 +24,23 @@ router.post(`/`, async (req, res, next) => {
 
     const fileTicket = validFileTickets.map((ticket) => {
       const ticketObject = ticket.toObject();
-      const madeDate = moment(ticket.madeDate).format("YYMMDD-hh:mm:ss");
-      const expireDate = moment(ticket.expireDate).format("YYMMDD-hh:mm:ss");
+      const madeDate = moment(ticket.madeDate)
+        .add(9, "h")
+        .format("YYMMDD-HH:mm:ss");
+      const expireDate = moment(ticket.expireDate)
+        .add(9, "h")
+        .format("YYMMDD-HH:mm:ss");
       return { ...ticketObject, madeDate: madeDate, expireDate: expireDate };
     });
 
     msg.RESPONSE_CODE = "SUCCESS";
     msg.COMMENT = msg.COMMENT + "성공";
     msg.TICKETS = fileTicket;
-    res.json(msg);
   } catch (err) {
     console.error(err);
     msg.RESPONSE_CODE = "FAILED";
     msg.COMMENT = msg.COMMENT + "실패";
+  } finally {
     res.json(msg);
   }
 });

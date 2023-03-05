@@ -22,14 +22,9 @@ router.post("/in", async (req, res, next) => {
     });
 
     //해당하는 데이터가 없을 시
-    if (data === null) {
-      msg.RESPONSE_CODE = "NO_USER";
-      msg.COMMENT = "해당 id의 사용자를 찾을 수 없습니다.";
-      res.json(msg);
-    }
+    if (data === null) throw new Error("NO_USER");
 
     //데이터 있을 시
-
     const salt = (await saltSchema.findOne({ id: id }))?.get("salt");
     const userData = await userSchema.findOne({ id: id });
     const storedPwd = userData?.get("password");
@@ -66,10 +61,14 @@ router.post("/in", async (req, res, next) => {
         }
       });
     }
-  } catch (err) {
-    console.error(err);
-    msg.RESPONSE_CODE = "LOGIN_ERROR";
-    msg.COMMENT = "로그인 처리 중 에러 발생.";
+  } catch (err: any) {
+    if (err.message === "NO_USER") {
+      msg.RESPONSE_CODE = "NO_USER";
+      msg.COMMENT = "유저를 찾을 수 없음";
+    } else {
+      msg.RESPONSE_CODE = "LOGIN_ERROR";
+      msg.COMMENT = "로그인 처리 중 에러 발생.";
+    }
   } finally {
     res.send(JSON.stringify(msg));
   }
@@ -157,12 +156,14 @@ router.get("/logout", (req, res, next) => {
   };
 
   req.session.destroy((err) => {
-    console.error(err);
+    if (err) console.error(err);
+    else {
+      console.log("destroyed session");
+      msg.RESPONSE_CODE = "LOGOUT_SUCCESS";
+      msg.COMMENT = "LOGOUT SUCESS";
+      res.json(msg);
+    }
   });
-
-  msg.RESPONSE_CODE = "LOGOUT_SUCCESS";
-  msg.COMMENT = "로그아웃 성공";
-  res.json(msg);
 });
 
 export default router;

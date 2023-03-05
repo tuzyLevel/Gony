@@ -9,6 +9,7 @@ const promises_1 = __importDefault(require("fs/promises"));
 const uuid4_1 = __importDefault(require("uuid4"));
 const path_1 = __importDefault(require("path"));
 const fileTicket_1 = __importDefault(require("../../../schema/fileTicket"));
+//`${SERVER_URL}/api/files`
 const router = express_1.default.Router();
 const rootFolder = path_1.default.join(process.env.PWD, `/users`);
 const storage = multer_1.default.diskStorage({
@@ -29,41 +30,22 @@ const storage = multer_1.default.diskStorage({
         cb(null, realFolderPath); // cb 콜백함수를 통해 전송된 파일 저장 디렉토리 설정
     },
     filename: function (req, file, cb) {
+        file.originalname = Buffer.from(file.originalname, "latin1").toString("utf8");
         cb(null, file.originalname); // cb 콜백함수를 통해 전송된 파일 이름 설정
     },
 });
 const upload = (0, multer_1.default)({ storage: storage });
-router.post("/upload", upload.single("file"), (req, res, next) => {
-    const msg = {
-        RESPONSE_CODE: "FAILED",
-        COMMENT: "파일 업로드 실패!",
-    };
-    if (req.file) {
-        msg.RESPONSE_CODE = "SUCCESS";
-        msg.COMMENT = `${req.file.originalname} 업로드 성공!`;
-    }
-    res.json(msg);
-});
-router.post("/delete", async (req, res, next) => {
-    const { path } = req.body;
-    const realFilePath = `${process.env.PWD}/users/${path}`;
-    const msg = {
-        RESPONSE_CODE: "DEFAULT",
-        COMMENT: `${realFilePath.substring(realFilePath.lastIndexOf("/") + 1)}`,
-    };
-    try {
-        await promises_1.default.access(realFilePath);
-        await promises_1.default.unlink(realFilePath);
-        msg.RESPONSE_CODE = "SUCCESS";
-        msg.COMMENT = msg.COMMENT + "삭제 성공";
-    }
-    catch (err) {
-        msg.RESPONSE_CODE = "FAILED";
-        msg.COMMENT = msg.COMMENT + "삭제 실패";
-        console.error(err);
-    }
-    res.json(msg);
-});
+// router.post("/upload", upload.single("file"), (req, res, next) => {
+//   const msg: Message.FileMessage = {
+//     RESPONSE_CODE: "FAILED",
+//     COMMENT: "파일 업로드 실패!",
+//   };
+//   if (req.file) {
+//     msg.RESPONSE_CODE = "SUCCESS";
+//     msg.COMMENT = `${req.file.originalname} 업로드 성공!`;
+//   }
+//   res.json(msg);
+// });
 router.post("/move", async (req, res, next) => {
     const { filePath, destFolderPath } = req.body;
     const realFilePath = `${process.env.PWD}/users/${filePath}`;
@@ -168,7 +150,9 @@ router.post(`/send`, async (req, res, next) => {
         msg.RESPONSE_CODE = "FAILED";
         msg.COMMENT = msg.COMMENT + "실패";
     }
-    res.json(msg);
+    finally {
+        res.json(msg);
+    }
 });
 router.get(`/download`, (req, res, next) => {
     if (!req.session || !req.session.userId || !req.query.filePath) {
@@ -225,6 +209,41 @@ router.post("/currentFolder", async (req, res, next) => {
         msg.data = [];
         console.error(err);
     }
+    finally {
+        res.json(msg);
+    }
+});
+router.post("", upload.single("file"), (req, res, next) => {
+    const msg = {
+        RESPONSE_CODE: "FAILED",
+        COMMENT: "파일 업로드 실패!",
+    };
+    if (req.file) {
+        msg.RESPONSE_CODE = "SUCCESS";
+        msg.COMMENT = `${req.file.originalname} 업로드 성공!`;
+    }
     res.json(msg);
+});
+router.delete("/*", async (req, res, next) => {
+    const filePath = req.url;
+    const realFilePath = `${process.env.PWD}/users${filePath}`;
+    const msg = {
+        RESPONSE_CODE: "DEFAULT",
+        COMMENT: `${realFilePath.substring(realFilePath.lastIndexOf("/") + 1)}`,
+    };
+    try {
+        await promises_1.default.access(realFilePath);
+        await promises_1.default.unlink(realFilePath);
+        msg.RESPONSE_CODE = "SUCCESS";
+        msg.COMMENT = msg.COMMENT + "삭제 성공";
+    }
+    catch (err) {
+        msg.RESPONSE_CODE = "FAILED";
+        msg.COMMENT = msg.COMMENT + "삭제 실패";
+        console.error(err);
+    }
+    finally {
+        res.json(msg);
+    }
 });
 exports.default = router;

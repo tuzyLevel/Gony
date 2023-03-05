@@ -86,19 +86,15 @@ const FileControllBox = (props: FileControllBoxProps) => {
   const inputChangeHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.currentTarget.files) {
       const file = e.currentTarget.files[0];
-      console.log(file);
+      // console.log(file);
       let formData = new FormData();
       formData.append("currentFolder", props.currentFolder);
       formData.append("file", file);
 
       try {
-        const response = await axios.post(
-          `${SERVER_URL}/api/files/upload`,
-          formData,
-          {
-            headers: { "Content-Type": "multipart/form-data" },
-          }
-        );
+        const response = await axios.post(`${SERVER_URL}/api/files`, formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
         const msg: Message.FileMessage = response.data;
         props.callAPICurrentFolderFiles(props.currentFolder);
         e.target.value = "";

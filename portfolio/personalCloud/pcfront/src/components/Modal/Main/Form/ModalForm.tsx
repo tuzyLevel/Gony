@@ -89,7 +89,6 @@ const ModalForm = (props: ModalFormProps) => {
       }
       if (inputEl.id === "password" && validation(inputEl.id, inputEl.value)) {
         password = inputEl.value;
-        console.log(inputEl.value);
         continue;
       }
       if (password === "") {
@@ -130,6 +129,9 @@ const ModalForm = (props: ModalFormProps) => {
         } else if (RESPONSE_CODE === "REGIST_DONE") {
           alert(COMMENT);
           dispatch(modalClose());
+        } else if (RESPONSE_CODE === "LOGIN_ERROR") {
+          alert(COMMENT);
+          return;
         }
       })
       .catch((err) => {

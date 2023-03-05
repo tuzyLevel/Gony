@@ -16,11 +16,9 @@ const Notice = (props: NoticeProps) => {
 
   const getFileTickets = useCallback(async () => {
     try {
-      const response = await axios.post(
-        `${SERVER_URL}/api/notice`,
-        {},
-        { withCredentials: true }
-      );
+      const response = await axios.get(`${SERVER_URL}/api/notice`, {
+        withCredentials: true,
+      });
       const { RESPONSE_CODE, COMMENT, TICKETS } = response.data;
       if (RESPONSE_CODE === "SUCCESS") {
         setTickets(TICKETS);

@@ -1,5 +1,4 @@
 import express, { Request, Response, NextFunction } from "express";
-import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import morgan from "morgan";
 import cors from "cors";
@@ -35,9 +34,9 @@ app.use(
 
 const mongoSessionStore = new MongoStore({
   mongoUrl: `mongodb://${process.env.MONGO_URL}/FM`,
-  ttl: 15, //15분간 유지
+  ttl: 30, //30분간 유지
   // autoRemove: "native",
-  autoRemoveInterval: 60,
+  // autoRemoveInterval: 30,
 });
 
 const sessionMiddleware = session({
@@ -59,22 +58,15 @@ app.use(morgan("dev"));
 
 app.use(authTouching);
 
-// app.use("/", express.static("build"));
-
 app.use("/api", apiController);
 
-//use static build files
+// use static build files
 
-// app.get("/*", (req, res, next) => {
-//   res.sendFile(`${process.env.PWD}/build/index.html`);
-// });
+app.use("/", express.static("build"));
 
-// app.use(
-//   sessionRouter,
-//   (err: Error, req: Request, res: Response, next: NextFunction) => {
-//     console.log(`Error Occured! ${err}`);
-//   }
-// );
+app.get("/*", (req, res, next) => {
+  res.sendFile(`${process.env.PWD}/build/index.html`);
+});
 
 app.use("/*", (req, res, next) => {
   console.log("wrong ask");
@@ -89,3 +81,10 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 httpServer.listen(app.get("port"), () => {
   console.log(`ready on ${app.get("port")} port`);
 });
+
+// app.use(
+//   sessionRouter,
+//   (err: Error, req: Request, res: Response, next: NextFunction) => {
+//     console.log(`Error Occured! ${err}`);
+//   }
+// );

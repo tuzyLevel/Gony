@@ -28,9 +28,9 @@ app.use((0, cors_1.default)({
 }));
 const mongoSessionStore = new connect_mongo_1.default({
     mongoUrl: `mongodb://${process.env.MONGO_URL}/FM`,
-    ttl: 15,
+    ttl: 30, //30분간 유지
     // autoRemove: "native",
-    autoRemoveInterval: 60,
+    // autoRemoveInterval: 30,
 });
 const sessionMiddleware = (0, express_session_1.default)({
     secret: process.env.SESSION_SECRET,
@@ -46,18 +46,12 @@ app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: false }));
 app.use((0, morgan_1.default)("dev"));
 app.use(authTouching_1.default);
-// app.use("/", express.static("build"));
 app.use("/api", apiController_1.default);
-//use static build files
-// app.get("/*", (req, res, next) => {
-//   res.sendFile(`${process.env.PWD}/build/index.html`);
-// });
-// app.use(
-//   sessionRouter,
-//   (err: Error, req: Request, res: Response, next: NextFunction) => {
-//     console.log(`Error Occured! ${err}`);
-//   }
-// );
+// use static build files
+app.use("/", express_1.default.static("build"));
+app.get("/*", (req, res, next) => {
+    res.sendFile(`${process.env.PWD}/build/index.html`);
+});
 app.use("/*", (req, res, next) => {
     console.log("wrong ask");
     res.statusCode = 404;
@@ -69,3 +63,9 @@ app.use((err, req, res, next) => {
 httpServer.listen(app.get("port"), () => {
     console.log(`ready on ${app.get("port")} port`);
 });
+// app.use(
+//   sessionRouter,
+//   (err: Error, req: Request, res: Response, next: NextFunction) => {
+//     console.log(`Error Occured! ${err}`);
+//   }
+// );

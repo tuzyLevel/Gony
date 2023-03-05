@@ -4,7 +4,7 @@ import { getPrivateDirectoryTree } from "../../../components/directoryListing";
 
 const router = express.Router();
 
-router.post("/directories", (req, res, next) => {
+router.get("", (req, res, next) => {
   const loginId = req.session.userId as string;
   const userRootPath = path.join(process.env.PWD!, `/users/${loginId}`);
 

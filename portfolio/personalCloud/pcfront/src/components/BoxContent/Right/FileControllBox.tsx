@@ -8,6 +8,7 @@ interface FileControllBoxProps extends React.PropsWithChildren {
   currentFolder: string;
   currentFolderFiles: Array<Files.ExtendedFileNode>;
   callAPICurrentFolderFiles: (folder: string) => void;
+  reRenderTriggerHandler: () => void;
 }
 
 const btns = ["Upload", "Download", "Folder"];
@@ -34,7 +35,8 @@ const FileControllBox = (props: FileControllBoxProps) => {
         );
         const msg: Message.FileMessage = response.data;
         if (msg.RESPONSE_CODE === "SUCCESS") {
-          props.callAPICurrentFolderFiles(props.currentFolder);
+          // props.callAPICurrentFolderFiles(props.currentFolder);
+          props.reRenderTriggerHandler();
         }
         alert(msg.COMMENT);
         return;

@@ -3,11 +3,13 @@ var Charge;
 (function (Charge) {
     const getChangeCount = (n, money) => {
         let totalCount = 0;
+        let window = 0;
         const digitCounts = Array(money.length);
         for (let i = 0; i < digitCounts.length; i++)
             digitCounts[i] = 0;
-        money = money.sort((a, b) => b - a);
-        console.log(money);
+        money = money.sort((a, b) => a - b);
+        while (true) {
+        }
     };
     function solution(n, money) {
         let answer = 0;

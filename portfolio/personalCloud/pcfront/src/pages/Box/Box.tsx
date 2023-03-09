@@ -120,6 +120,10 @@ const Box = () => {
     setRightContent((prev) => "box");
   };
 
+  const reRenderTriggerHandler = () => {
+    setReRenderTrigger(true);
+  };
+
   const fileBtnsClickHandler = async (e: SyntheticEvent) => {
     e.stopPropagation();
     const currentTarget = e.currentTarget;
@@ -158,17 +162,6 @@ const Box = () => {
         } catch (err) {
           console.error(err);
         }
-        // try {
-        //   const response = await axios.post(
-        //     `${SERVER_URL}/api/files/delete`,
-        //     { path: file.path },
-        //     { withCredentials: true }
-        //   );
-        //   const msg: Message.FileMessage = response.data;
-        //   alert(msg.COMMENT);
-        // } catch (err) {
-        //   console.error(err);
-        // }
         callAPICurrentFolderFiles(currentFolder);
         return;
       }
@@ -470,6 +463,7 @@ const Box = () => {
               currentFolder={currentFolder}
               currentFolderFiles={currentFolderFiles}
               callAPICurrentFolderFiles={callAPICurrentFolderFiles}
+              reRenderTriggerHandler={reRenderTriggerHandler}
             />
           </div>
         </Card>

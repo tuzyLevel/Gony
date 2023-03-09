@@ -29,13 +29,46 @@ var NumToBinaryTree;
             const maxLength = getMaxLength(binaryNum);
             console.log(`${num} maxLength : ${maxLength}`);
             const zeroPaddingLength = maxLength - binaryNum.length;
-            const root = Math.floor(maxLength / 2);
-            // const root = root - zeroPaddingLength;
             const fullBinaryNum = "0".repeat(zeroPaddingLength) + binaryNum;
-            //   result.push(+binaryNum[root - (maxLength - binaryNum.length)]);
+            const q = [];
+            let possible = true;
+            // for (let i = zeroPaddingLength; i < fullBinaryNum.length; i++) {
+            //   if (
+            //     fullBinaryNum[Math.floor(fullBinaryNum.length / 2)] === "0" ||
+            //     (i % 2 === 1 &&
+            //       fullBinaryNum[i] === "0" &&
+            //       (fullBinaryNum[i - 1] === "1" || fullBinaryNum[i + 1] === "1"))
+            //   ) {
+            //     result.push(0);
+            //     possible = false;
+            //     break;
+            //   }
+            // }
+            // if (possible) result.push(1);
+            if (fullBinaryNum[Math.floor(fullBinaryNum.length / 2)] === "0") {
+                result.push(0);
+                continue;
+            }
+            for (let i = 0; i < fullBinaryNum.length; i += 2) {
+                q.push(i);
+            }
+            while (q.length > 1) {
+                const leftPos = q.shift();
+                const rightPos = q.shift();
+                const mid = (leftPos + rightPos) / 2;
+                if (fullBinaryNum[mid] === "0" &&
+                    (fullBinaryNum[leftPos] === "1" || fullBinaryNum[rightPos] === "1")) {
+                    result.push(0);
+                    possible = false;
+                    break;
+                }
+            }
+            if (possible)
+                result.push(1);
         }
         return result;
     };
 })(NumToBinaryTree || (NumToBinaryTree = {}));
 console.log(NumToBinaryTree.solution([7, 42, 5]));
 console.log(NumToBinaryTree.solution([63, 111, 95]));
+console.log(NumToBinaryTree.solution([0]));
